@@ -39,7 +39,12 @@ export default function Chat() {
     async function fetchData() {
       if (currentUser) {
         if (currentUser.isAvatarImageSet) {
-          const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+          const data = await axios.get(`${allUsersRoute}/${currentUser._id}`, {
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          });
           setContacts(data.data);
         } else {
           navigate("/setAvatar");

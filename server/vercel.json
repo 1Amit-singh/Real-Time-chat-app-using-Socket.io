@@ -3,17 +3,17 @@
   "name": "my-app",
   "builds": [
     {
-      "src": "/index.js",
+      "src": "index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "/index.js"
+      "src": "/api/(.*)",
+      "dest": "index.js"
     }
   ],
   "env": {
-    "MONGO_URL": "@mongo_url"
+    "MONGO_PASSWORD": "@mongo_password"
   }
 }

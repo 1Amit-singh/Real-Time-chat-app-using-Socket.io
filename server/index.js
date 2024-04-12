@@ -10,8 +10,10 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 
+MONGO_URL = `mongodb+srv://iamitsinghthakur123:${process.env.MONGO_PASSWORD}@cluster0.wdbikfc.mongodb.net/chat`;
+
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(MONGO_URL)
   .then(() => {
     console.log("DB Connetion Successfull");
   })

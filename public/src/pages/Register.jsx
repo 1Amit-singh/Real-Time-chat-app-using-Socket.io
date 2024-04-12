@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/chat-logo.png";
-import { ToastContainer, toast } from "react-toastify"
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { registerRoute } from "../utils/APIRoutes";
@@ -14,7 +14,6 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-
   });
 
   const toastOptions = {
@@ -23,58 +22,54 @@ const Register = () => {
     pauseOnHover: true,
     draggable: true,
     theme: "dark",
-  }
+  };
 
-  useEffect(()=> {
-    if(localStorage.getItem('chat-app-user')){
+  useEffect(() => {
+    if (localStorage.getItem("chat-app-user")) {
       navigate("/");
     }
   }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (handleValidation()){
-      const {password, username, email} = values;
+    if (handleValidation()) {
+      const { password, username, email } = values;
       const { data } = await axios.post(registerRoute, {
         username,
         email,
         password,
       });
-      if(data.status === false){
+      if (data.status === false) {
         toast.error(data.msg, toastOptions);
       }
-      if(data.status === true){
-        localStorage.setItem('chat-app-user', JSON.stringify(data.user));
+      if (data.status === true) {
+        localStorage.setItem("chat-app-user", JSON.stringify(data.user));
       }
-      navigate("/")
-    };
+      navigate("/");
+    }
   };
 
   const handleChange = (event) => {
-    setValues({...values, [event.target.name]: event.target.value});
-  }
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
 
   const handleValidation = () => {
-    const {password, confirmpassword, username, email} = values;
-    if(password !== confirmpassword){
+    const { password, confirmpassword, username, email } = values;
+    if (password !== confirmpassword) {
       toast.error("Password and Confirm Password should be same", toastOptions);
       return false;
-    }
-    else if (username.length < 3){
+    } else if (username.length < 3) {
       toast.error("Username should be greater than 3 characters", toastOptions);
       return false;
-    }
-    else if (password.length < 8){
+    } else if (password.length < 8) {
       toast.error("Password should be greater than 8 characters", toastOptions);
       return false;
-    }
-    else if (email === ""){
+    } else if (email === "") {
       toast.error("Email is Required", toastOptions);
       return false;
     }
     return true;
-
-  }
+  };
 
   return (
     <>
@@ -109,8 +104,9 @@ const Register = () => {
             onChange={(e) => handleChange(e)}
           />
           <button type="submit">Create User</button>
-          <span>Already have and account ? <Link to="/login" >Login</Link> </span>
-
+          <span>
+            Already have and account ? <Link to="/login">Login</Link>{" "}
+          </span>
         </form>
       </FormContainer>
       <ToastContainer />
@@ -128,69 +124,67 @@ const FormContainer = styled.div`
   background-color: #131324;
   justify-content: center;
 
-  .brand{
+  .brand {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
 
-    img{
+    img {
       height: 5rem;
       mix-blend-mode: exclusion;
     }
-    h1{
+    h1 {
       color: #fff;
       text-transform: uppercase;
     }
   }
 
-  form{
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      background-color: #00000076;
-      border-radius: 2rem;
-      padding: 3rem 5rem;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: #00000076;
+    border-radius: 2rem;
+    padding: 3rem 5rem;
+  }
+  input {
+    background-color: transparent;
+    padding: 1rem;
+    border: 0.1rem solid #4e0eff;
+    border-radius: 0.4rem;
+    color: #fff;
+    width: 100%;
+    font-size: 1rem;
+    &:focus {
+      border: 0.1rem solid #997af0;
+      outline: none;
     }
-    input{
-      background-color: transparent;
-      padding: 1rem;
-      border: 0.1rem solid #4e0eff;
-      border-radius: 0.4rem;
-      color: #fff;
-      width: 100%;
-      font-size: 1rem;
-      &:focus{
-        border: 0.1rem solid #997af0;
-        outline: none;
-      }
+  }
+  button {
+    background-color: #997af0;
+    padding: 1rem 2rem;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0.4rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    transition: 0.5s ease-in-out;
+    &:hover {
+      background-color: #4e0eff;
     }
-    button{
-      background-color: #997af0;
-      padding: 1rem 2rem;
-      color: #fff;
-      border: none;
+  }
+  span {
+    color: #fff;
+    text-transform: uppercase;
+    a {
+      color: #4e0eff;
+      text-decoration: none;
       font-weight: bold;
-      cursor: pointer;
-      border-radius: 0.4rem;
-      font-size: 1rem;
-      text-transform: uppercase;
-      transition: 0.5s ease-in-out;
-      &:hover{
-        background-color: #4e0eff;
-      }
     }
-    span{
-      color: #fff;
-      text-transform: uppercase;
-      a{
-        color: #4e0eff;
-        text-decoration: none;
-        font-weight: bold;
-      }
-    }
-
-
+  }
 `;
 
 export default Register;

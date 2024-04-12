@@ -12,8 +12,5 @@
       "src": "/api/(.*)",
       "dest": "index.js"
     }
-  ],
-  "env": {
-    "MONGO_PASSWORD": "@mongo_password"
-  }
+  ]
 }
